@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: fullstack-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node dist/main.js
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: MONGODB_URI
+        fromDatabase:
+          name: fullstack-mongodb
+          property: connectionString
+    autoDeploy: true
+    region: oregon
+
+databases:
+  - name: fullstack-mongodb
+    plan: free
+    region: oregon

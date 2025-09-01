@@ -1,16 +1,30 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProjectsModule } from './projects/projects.module';
-import { TasksModule } from './tasks/tasks.module';
-import { PrismaModule } from './prisma/prisma.module';
 import { DatabaseModule } from './database/database.module';
+import { TasksModule } from './tasks/tasks.module';
+import { RolesGuard } from './auth/guards/roles.guard';
 
 @Module({
-  imports: [AuthModule, UsersModule, ProjectsModule, TasksModule, PrismaModule, DatabaseModule],
+  imports: [AuthModule, UsersModule, ProjectsModule, DatabaseModule, TasksModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // Temporarily disabled sanitize middleware due to compatibility issues
+    // consumer
+    //   .apply(SanitizeMiddleware)
+    //   .forRoutes('*');
+  }
+}

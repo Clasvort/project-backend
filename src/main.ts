@@ -18,8 +18,8 @@ async function bootstrap() {
   // CORS configuration for production
   app.enableCors({
     origin: process.env.NODE_ENV === 'production' 
-      ? [process.env.FRONTEND_URL, 'https://your-frontend-domain.com'] 
-      : ['http://localhost:5173', 'http://localhost:3000'],
+      ? [process.env.FRONTEND_URL, 'https://subtle-jelly-80f70b.netlify.app'] 
+      : ['http://localhost:5173', 'http://localhost:3000','https://subtle-jelly-80f70b.netlify.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],

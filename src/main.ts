@@ -38,5 +38,4 @@ async function bootstrap() {
   logger.log(`📚 API Documentation: http://localhost:${port}/api/v1`);
   logger.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 }
-}
 bootstrap();
